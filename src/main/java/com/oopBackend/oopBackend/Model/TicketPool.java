@@ -4,57 +4,85 @@ import java.util.concurrent.ArrayBlockingQueue;
 
 public class TicketPool {
 
-    private ArrayBlockingQueue<String> ticketQueue;
+    private final ArrayBlockingQueue<String> ticketQueue;
     private int maxCapacity;
 
     // Constructor to initialize the ticket pool with the specified max capacity
     public TicketPool(int initialCapacity) {
+        if (initialCapacity <= 0) {
+            throw new IllegalArgumentException("Initial capacity must be greater than 0.");
+        }
         this.ticketQueue = new ArrayBlockingQueue<>(initialCapacity);
-        this.maxCapacity = initialCapacity;  // Set max capacity on initialization
+        this.maxCapacity = initialCapacity;
     }
 
-    // Method to add tickets to the pool (make sure not to exceed max capacity)
-    public void addTickets(int ticketReleaseRate) {
+    // Method to add tickets to the pool (ensures not to exceed max capacity)
+    public synchronized void addTickets(int ticketReleaseRate) {
+        if (ticketReleaseRate <= 0) {
+            System.out.println("Ticket release rate must be greater than 0.");
+            return;
+        }
         for (int i = 0; i < ticketReleaseRate; i++) {
             if (ticketQueue.size() < maxCapacity) {
-                ticketQueue.add("Ticket " + (ticketQueue.size() + 1));
+                String ticket = "Ticket " + (ticketQueue.size() + 1);
+                ticketQueue.add(ticket);
+                System.out.println("Added: " + ticket);
+            } else {
+                System.out.println("Ticket pool is full. Cannot add more tickets.");
+                break;
             }
         }
     }
 
     // Method to remove a ticket from the pool
-    public void removeTicket() {
+    public synchronized String removeTicket() {
         if (!ticketQueue.isEmpty()) {
-            ticketQueue.poll();
+            String removedTicket = ticketQueue.poll();
+            System.out.println("Removed: " + removedTicket);
+            return removedTicket;
+        } else {
+            System.out.println("No tickets to remove. Pool is empty.");
+            return null;
         }
     }
 
     // Method to check if the pool is empty
-    public boolean isEmpty() {
+    public synchronized boolean isEmpty() {
         return ticketQueue.isEmpty();
     }
 
     // Method to check if the pool is full
-    public boolean isFull() {
+    public synchronized boolean isFull() {
         return ticketQueue.size() == maxCapacity;
     }
 
     // Method to get the current number of tickets in the pool
-    public int getCurrentTickets() {
+    public synchronized int getCurrentTickets() {
         return ticketQueue.size();
     }
 
-    // Method to set the maximum capacity
-    public void setMaxCapacity(int maxCapacity) {
+    // Method to set the maximum capacity (resizing not supported by ArrayBlockingQueue)
+    public synchronized void setMaxCapacity(int maxCapacity) {
+        if (maxCapacity <= 0) {
+            throw new IllegalArgumentException("Max capacity must be greater than 0.");
+        }
+        if (maxCapacity < ticketQueue.size()) {
+            throw new IllegalStateException("New capacity cannot be less than the current ticket count.");
+        }
         this.maxCapacity = maxCapacity;
+        System.out.println("Max capacity updated to: " + maxCapacity);
     }
 
     // Method to get the maximum capacity
-    public int getMaxCapacity() {
+    public synchronized int getMaxCapacity() {
         return maxCapacity;
     }
 
-    public ArrayBlockingQueue<String> getTicketQueue() {
-        return ticketQueue;
+    // Get the ticket queue (for debugging or monitoring)
+    public synchronized ArrayBlockingQueue<String> getTicketQueue() {
+        ArrayBlockingQueue<String> copy = new ArrayBlockingQueue<>(maxCapacity);
+        copy.addAll(ticketQueue); // Copy the elements
+        return copy;
     }
+
 }

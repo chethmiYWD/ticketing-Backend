@@ -20,7 +20,6 @@ public class Customer implements Runnable {
         this.customerRetrievalRate = customerRetrievalRate;
     }
 
-    @Override
     public void run() {
         try {
             while (true) {
