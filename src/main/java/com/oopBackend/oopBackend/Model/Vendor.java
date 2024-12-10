@@ -10,15 +10,17 @@ public class Vendor implements Runnable {
     private String id;  // MongoDB document ID (optional if MongoDB generates it)
     private String name;
     private String email;
+    private String password;
     private String phone;
     private String businessName;
     private final TicketPool ticketPool;
     private final int ticketReleaseRate;
 
     // Constructor
-    public Vendor(String name, String email, String phone, String businessName, TicketPool ticketPool, int ticketReleaseRate) {
+    public Vendor(String name, String email, String password, String phone, String businessName, TicketPool ticketPool, int ticketReleaseRate) {
         this.name = name;
         this.email = email;
+        this.password = password;
         this.phone = phone;
         this.businessName = businessName;
         this.ticketPool = ticketPool;
@@ -71,6 +73,13 @@ public class Vendor implements Runnable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getPhone() {
