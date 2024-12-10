@@ -1,26 +1,38 @@
 package com.oopBackend.oopBackend.Controller;
 
 import com.oopBackend.oopBackend.Model.Customer;
-import com.oopBackend.oopBackend.Repository.CustomerRepository;
+import com.oopBackend.oopBackend.Service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/Customer")
+@RequestMapping("/customer")
 public class CustomerController {
 
-    @Autowired
-    private CustomerRepository customerRepo;
+    private final CustomerService customerService;
 
-    @PostMapping
-    public ResponseEntity<String> addCustomer(@RequestBody Customer customer) {
-        customerRepo.save(customer);
-        return ResponseEntity.ok("Customer saved successfully!");
+    @Autowired
+    public CustomerController(CustomerService customerService) {
+        this.customerService = customerService;
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Customer> getCustomer(@PathVariable String id) {
-        return ResponseEntity.of(customerRepo.findById(id));
+    // Register customer
+    @PostMapping("/register")
+    public ResponseEntity<String> registerCustomer(@RequestBody Customer customer) {
+        customerService.registerCustomer(customer);
+        return ResponseEntity.ok("Customer registered successfully!");
+    }
+
+    // Login customer
+    @PostMapping("/login")
+    public ResponseEntity<String> loginCustomer(@RequestBody Customer loginDetails) {
+        boolean isLoggedIn = customerService.loginCustomer(loginDetails.getEmail(), loginDetails.getPassword());
+
+        if (isLoggedIn) {
+            return ResponseEntity.ok("Login successful!");
+        }
+
+        return ResponseEntity.status(401).body("Invalid credentials.");
     }
 }
