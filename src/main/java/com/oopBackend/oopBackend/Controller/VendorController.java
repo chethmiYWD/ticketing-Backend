@@ -73,36 +73,49 @@
 //    }
 //}
 
-package com.oopBackend.oopBackend.Controller;
-
-import com.oopBackend.oopBackend.Model.Vendor;
-import com.oopBackend.oopBackend.Service.VendorService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
-
-@RestController
-@RequestMapping("/vendor")
-public class VendorController {
-
-    private final VendorService vendorService;
-
-    @Autowired
-    public VendorController(VendorService vendorService) {
-        this.vendorService = vendorService;
-    }
-
-    // Vendor Login
-    @PostMapping("/login")
-    public ResponseEntity<String> loginVendor(@RequestBody Vendor vendor) {
-        Optional<Vendor> foundVendor = vendorService.loginVendor(vendor.getEmail(), vendor.getPassword());
-
-        if (foundVendor.isPresent()) {
-            return ResponseEntity.ok("Vendor logged in successfully!");  // Successful login
-        } else {
-            return ResponseEntity.status(401).body("Invalid email or password!");  // Invalid credentials
-        }
-    }
-}
+//package com.oopBackend.oopBackend.Controller;
+//
+//import com.oopBackend.oopBackend.Model.Vendor;
+//import com.oopBackend.oopBackend.Service.VendorService;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.http.ResponseEntity;
+//import org.springframework.web.bind.annotation.*;
+//
+//import java.util.Map;
+//import java.util.Optional;
+//
+//@RestController
+//@RequestMapping("/vendor")
+//public class VendorController {
+//
+//    private final VendorService vendorService;
+//
+//    @Autowired
+//    public VendorController(VendorService vendorService) {
+//        this.vendorService = vendorService;
+//    }
+//
+//    // Vendor Login
+//    @PostMapping("/login")
+//    public ResponseEntity<Map<String, String>> loginVendor(@RequestBody Map<String, String> loginDetails) {
+//        String email = loginDetails.get("email");
+//        String password = loginDetails.get("password");
+//
+//        // Authenticate vendor
+//        Optional<Vendor> foundVendor = vendorService.loginVendor(email, password);
+//
+//        if (foundVendor.isPresent()) {
+//            // Return success with role
+//            return ResponseEntity.ok(Map.of(
+//                    "email", email,
+//                    "role", "Vendor"
+//            ));
+//        } else {
+//            // Return error for invalid credentials
+//            return ResponseEntity.status(401).body(Map.of(
+//                    "message", "Invalid email or password"
+//            ));
+//        }
+//    }
+//}
+//
