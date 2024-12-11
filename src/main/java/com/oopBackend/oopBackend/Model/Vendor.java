@@ -13,10 +13,17 @@ public class Vendor implements Runnable {
     private String password;
     private String phone;
     private String businessName;
+
     private final TicketPool ticketPool;
     private final int ticketReleaseRate;
 
-    // Constructor
+    public Vendor() {
+        // MongoDB needs a no-argument constructor
+        this.ticketPool = null;  // Initialize as needed, if necessary
+        this.ticketReleaseRate = 0;
+    }
+
+    // Constructor with required fields
     public Vendor(String name, String email, String password, String phone, String businessName, TicketPool ticketPool, int ticketReleaseRate) {
         this.name = name;
         this.email = email;
@@ -26,6 +33,7 @@ public class Vendor implements Runnable {
         this.ticketPool = ticketPool;
         this.ticketReleaseRate = ticketReleaseRate;
     }
+
 
     @Override
     public void run() {

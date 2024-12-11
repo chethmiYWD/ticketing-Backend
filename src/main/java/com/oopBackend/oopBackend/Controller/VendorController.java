@@ -1,5 +1,6 @@
+package com.oopBackend.oopBackend.Controller;
+
 ////package com.oopBackend.oopBackend.Controller;
-////
 ////import com.oopBackend.oopBackend.Model.Vendor;
 ////import com.oopBackend.oopBackend.Repository.VendorRepository;
 ////import org.springframework.beans.factory.annotation.Autowired;
@@ -119,3 +120,31 @@
 //    }
 //}
 //
+
+import java.util.Optional;
+import com.oopBackend.oopBackend.Model.Vendor;
+import com.oopBackend.oopBackend.Service.VendorService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/vendors")
+public class VendorController {
+
+    @Autowired
+    private VendorService vendorService;
+
+    @GetMapping("/profile")
+    public ResponseEntity<Vendor> getVendorProfile(@RequestParam("email") String email) {
+        Optional<Vendor> vendor = vendorService.findByEmail(email);
+        if (vendor.isPresent()) {
+            return ResponseEntity.ok(vendor.get());
+        } else {
+            return ResponseEntity.status(404).body(null);  // Return 404 if vendor not found
+        }
+    }
+}

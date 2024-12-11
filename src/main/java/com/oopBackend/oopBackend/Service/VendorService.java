@@ -71,4 +71,8 @@ public class VendorService {
     public Optional<Vendor> loginVendor(String email, String password) {
         return vendorRepository.findByEmailAndPassword(email, password);
     }
+
+    public Optional<Vendor> findByEmail(String email) {
+        return vendorRepository.findByEmail(email);  // Call the repository method
+    }
 }
