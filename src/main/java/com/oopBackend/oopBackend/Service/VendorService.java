@@ -68,12 +68,7 @@ public class VendorService {
         this.vendorRepository = vendorRepository;
     }
 
-    // Log in the Vendor by matching email and password
     public Optional<Vendor> loginVendor(String email, String password) {
-        Optional<Vendor> vendor = vendorRepository.findByEmail(email);
-        if (vendor.isPresent() && vendor.get().getPassword().equals(password)) {
-            return vendor;  // Return the vendor if email and password match
-        }
-        return Optional.empty();  // Return empty if no match found
+        return vendorRepository.findByEmailAndPassword(email, password);
     }
 }
