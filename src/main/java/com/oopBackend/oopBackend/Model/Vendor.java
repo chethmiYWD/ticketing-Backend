@@ -14,8 +14,8 @@ public class Vendor implements Runnable {
     private String phone;
     private String businessName;
 
-    private final TicketPool ticketPool;
-    private final int ticketReleaseRate;
+    private TicketPool ticketPool;
+    private int ticketReleaseRate;
 
     public Vendor() {
         // MongoDB needs a no-argument constructor
@@ -105,6 +105,9 @@ public class Vendor implements Runnable {
     public void setBusinessName(String businessName) {
         this.businessName = businessName;
     }
+    public void setTicketPool(TicketPool ticketPool) {
+        this.ticketPool = ticketPool;
+    }
 
     public TicketPool getTicketPool() {
         return ticketPool;
@@ -112,5 +115,8 @@ public class Vendor implements Runnable {
 
     public int getTicketReleaseRate() {
         return ticketReleaseRate;
+    }
+    public void setTicketReleaseRate(int ticketReleaseRate) {
+        this.ticketReleaseRate = ticketReleaseRate;
     }
 }
