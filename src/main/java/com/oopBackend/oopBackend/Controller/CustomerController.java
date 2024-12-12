@@ -1,42 +1,3 @@
-//package com.oopBackend.oopBackend.Controller;
-//
-//import com.oopBackend.oopBackend.Model.Customer;
-//import com.oopBackend.oopBackend.Service.CustomerService;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.http.ResponseEntity;
-//import org.springframework.web.bind.annotation.*;
-//
-//@RestController
-//@RequestMapping("/customers")
-//public class CustomerController {
-//
-//    private final CustomerService customerService;
-//
-//    @Autowired
-//    public CustomerController(CustomerService customerService) {
-//        this.customerService = customerService;
-//    }
-//
-//    // Register customer
-//    @PostMapping("/register")
-//    public ResponseEntity<String> registerCustomer(@RequestBody Customer customer) {
-//        customerService.registerCustomer(customer);
-//        return ResponseEntity.ok("Customer registered successfully!");
-//    }
-//
-//    // Login customer
-//    @PostMapping("/login")
-//    public ResponseEntity<String> loginCustomer(@RequestBody Customer loginDetails) {
-//        boolean isLoggedIn = customerService.loginCustomer(loginDetails.getEmail(), loginDetails.getPassword());
-//
-//        if (isLoggedIn) {
-//            return ResponseEntity.ok("Login successful!");
-//        }
-//
-//        return ResponseEntity.status(401).body("Invalid credentials.");
-//    }
-//}
-
 package com.oopBackend.oopBackend.Controller;
 
 import com.oopBackend.oopBackend.Model.Customer;
@@ -49,10 +10,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
+//Handle customer requests
 @RestController
 @RequestMapping("/customers")
 public class CustomerController {
 
+//Inject customer service implementation
     private final CustomerService customerService;
 
     @Autowired
@@ -60,13 +23,13 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    // Register customer
+    // Handle POST requests to /register endpoint
     @PostMapping("/register")
     public ResponseEntity<Map<String, String>> registerCustomer(@RequestBody Customer customer) {
         Map<String, String> response = new HashMap<>();
 
+        // Register the customer
         try {
-            // Register the customer
             customerService.registerCustomer(customer);
             response.put("message", "Customer registered successfully!");
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -80,31 +43,3 @@ public class CustomerController {
     }
 }
 
-    // Login customer
-//    @PostMapping("/login")
-//    public ResponseEntity<UserResponse> loginCustomer(@RequestBody LoginRequest loginRequest) {
-//        String email = loginRequest.getEmail();
-//        String password = loginRequest.getPassword();
-//
-//        // Authenticate customer
-//        Customer customer = customerService.authenticate(email, password);
-//
-//        if (customer != null) {
-//            // Create a UserResponse with role 'Customer'
-//            UserResponse response = new UserResponse(customer.getEmail(), "Customer");
-//            return ResponseEntity.ok(response);
-//        }
-//
-//        // If not a customer, check vendor login
-//        Vendor vendor = vendorService.authenticate(email, password);
-//
-//        if (vendor != null) {
-//            // Create a UserResponse with role 'Vendor'
-//            UserResponse response = new UserResponse(vendor.getEmail(), "Vendor");
-//            return ResponseEntity.ok(response);
-//        }
-//
-//        // If authentication fails for both, return unauthorized
-//        return ResponseEntity.status(401).body(null);
-//    }
-//}
