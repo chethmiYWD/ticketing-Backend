@@ -10,8 +10,10 @@ import java.util.List;
 @Service
 public class EventService {
 
+    // Final instance of EventRepository interface
     private final EventRepository eventRepository;
 
+    // Constructor
     @Autowired
     public EventService(EventRepository eventRepository) {
         this.eventRepository = eventRepository;

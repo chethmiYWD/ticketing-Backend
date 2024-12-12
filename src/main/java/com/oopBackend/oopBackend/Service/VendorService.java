@@ -61,18 +61,22 @@ import java.util.Optional;
 @Service
 public class VendorService {
 
+    // Final instance of VendorRepository interface
     private final VendorRepository vendorRepository;
 
+    // Constructor
     @Autowired
     public VendorService(VendorRepository vendorRepository) {
         this.vendorRepository = vendorRepository;
     }
 
+    // Attempts to log in a vendor
     public Optional<Vendor> loginVendor(String email, String password) {
         return vendorRepository.findByEmailAndPassword(email, password);
     }
 
+    // Attempts to find a vendor by an email
     public Optional<Vendor> findByEmail(String email) {
-        return vendorRepository.findByEmail(email);  // Call the repository method
+        return vendorRepository.findByEmail(email);
     }
 }

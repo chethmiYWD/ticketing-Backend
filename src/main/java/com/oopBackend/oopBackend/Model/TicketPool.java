@@ -4,6 +4,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 
 public class TicketPool {
 
+    // Thread-safe queue to store ticket-related data
     private final ArrayBlockingQueue<String> ticketQueue;
     private int maxCapacity;
 
@@ -16,7 +17,7 @@ public class TicketPool {
         this.maxCapacity = initialCapacity;
     }
 
-    // Method to add tickets to the pool (ensures not to exceed max capacity)
+    // Method to add tickets to the pool
     public synchronized void addTickets(int ticketReleaseRate) {
         if (ticketReleaseRate <= 0) {
             System.out.println("Ticket release rate must be greater than 0.");
@@ -61,7 +62,7 @@ public class TicketPool {
         return ticketQueue.size();
     }
 
-    // Method to set the maximum capacity (resizing not supported by ArrayBlockingQueue)
+    // Method to set the maximum capacity
     public synchronized void setMaxCapacity(int maxCapacity) {
         if (maxCapacity <= 0) {
             throw new IllegalArgumentException("Max capacity must be greater than 0.");
@@ -78,11 +79,10 @@ public class TicketPool {
         return maxCapacity;
     }
 
-    // Get the ticket queue (for debugging or monitoring)
+    // Get the ticket queue
     public synchronized ArrayBlockingQueue<String> getTicketQueue() {
         ArrayBlockingQueue<String> copy = new ArrayBlockingQueue<>(maxCapacity);
         copy.addAll(ticketQueue); // Copy the elements
         return copy;
     }
-
 }

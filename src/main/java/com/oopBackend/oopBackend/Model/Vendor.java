@@ -3,11 +3,12 @@ package com.oopBackend.oopBackend.Model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+// Represent MongoDB collection named 'Vendor'
 @Document(collection = "Vendor")
 public class Vendor implements Runnable {
 
     @Id
-    private String id;  // MongoDB document ID (optional if MongoDB generates it)
+    private String id;
     private String name;
     private String email;
     private String password;
@@ -18,12 +19,12 @@ public class Vendor implements Runnable {
     private int ticketReleaseRate;
 
     public Vendor() {
-        // MongoDB needs a no-argument constructor
-        this.ticketPool = null;  // Initialize as needed, if necessary
+        // No-argument constructor for MongoDB
+        this.ticketPool = null;
         this.ticketReleaseRate = 0;
     }
 
-    // Constructor with required fields
+    // Constructor
     public Vendor(String name, String email, String password, String phone, String businessName, TicketPool ticketPool, int ticketReleaseRate) {
         this.name = name;
         this.email = email;
@@ -34,7 +35,7 @@ public class Vendor implements Runnable {
         this.ticketReleaseRate = ticketReleaseRate;
     }
 
-
+    // Loop until thread is interrupted
     @Override
     public void run() {
         try {
@@ -52,10 +53,9 @@ public class Vendor implements Runnable {
         }
     }
 
-    // Save vendor actions to MongoDB (if necessary)
+    // Save vendor actions to MongoDB
     private void saveVendorAction() {
         System.out.println("Vendor action saved: " + name + " added " + ticketReleaseRate + " tickets.");
-        // Implement repository logic to persist this action if needed
     }
 
     // Getters and Setters

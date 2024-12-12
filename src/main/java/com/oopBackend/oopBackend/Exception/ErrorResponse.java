@@ -2,6 +2,7 @@ package com.oopBackend.oopBackend.Exception;
 
 import java.util.Date;
 
+// Error response class for error handling
 public class ErrorResponse {
     private Date timestamp;
     private String message;

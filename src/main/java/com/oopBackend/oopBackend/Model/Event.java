@@ -3,6 +3,7 @@ package com.oopBackend.oopBackend.Model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+// Represents a MongoDB collection named 'events'
 @Document(collection = "events")
 public class Event {
 
@@ -16,7 +17,7 @@ public class Event {
     private int totalTickets;
     private double ticketReleaseRate;
 
-    // Constructors, getters, and setters
+    // Constructors
     public Event(String name, String date, int maxTickets, double ticketPrice, int totalTickets, double ticketReleaseRate) {
         this.name = name;
         this.date = date;
@@ -27,7 +28,7 @@ public class Event {
         this.ticketsSold = 0;  // Initially, no tickets are sold
     }
 
-    // Getters and setters for all fields
+    // Getters and setters
 
     public String getId() {
         return id;
