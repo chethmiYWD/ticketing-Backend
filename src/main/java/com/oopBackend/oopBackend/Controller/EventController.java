@@ -10,14 +10,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200") // Add the frontend's origin
+@CrossOrigin(origins = "http://localhost:4200") //Frontend URL
 @RestController
+//Handle '/events' requests
 @RequestMapping("/events")
 public class EventController {
 
+    // Final instance of event service
     private final EventService eventService;
+
+    // Final instance of event repository interface
     private final EventRepository eventRepository;
 
+    // Constructor for EventController class
     @Autowired
     public EventController(EventService eventService, EventRepository eventRepository) {
         this.eventService = eventService;
@@ -46,18 +51,23 @@ public class EventController {
         }
     }
 
+    // Endpoint to handle booking attempts
     @PutMapping("/{id}/bookTicket")
     public ResponseEntity<Event> bookTicket(@PathVariable String id) {
         Optional<Event> optionalEvent = eventRepository.findById(id); // Use the instance method
         if (!optionalEvent.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+
+        // Check ticket availability, increment count if tickets are available and save updated event
         Event event = optionalEvent.get();
         if (event.getTicketsSold() < event.getMaxTickets()) {
             event.setTicketsSold(event.getTicketsSold() + 1);
             eventRepository.save(event); // Save updated event
             return ResponseEntity.ok(event);
         }
+
+        // Error response if request invalid
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
 

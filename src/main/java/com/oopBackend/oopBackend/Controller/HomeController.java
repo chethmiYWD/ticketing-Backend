@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HomeController {
 
+    // Handles GET requests to the root ("/") endpoint
     @GetMapping("/")
     public String home() {
         return "Welcome to the API!";

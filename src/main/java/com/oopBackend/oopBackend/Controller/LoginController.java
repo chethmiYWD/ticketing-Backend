@@ -11,16 +11,20 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 import java.util.Optional;
 
+//Handles 'auth' requests
 @RestController
 @RequestMapping("/auth")
 public class LoginController {
 
+    // Customer repository implementation
     @Autowired
     private CustomerRepository customerRepository;
 
+    // Vendor repository implementation
     @Autowired
     private VendorRepository vendorRepository;
 
+    // Handles '/login' endpoint requests
     @PostMapping("/login")
     public ResponseEntity<Map<String, String>> login(@RequestBody Map<String, String> loginDetails) {
         String email = loginDetails.get("email");

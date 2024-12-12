@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
-//Handle customer requests
+//Handle '/customer' requests
 @RestController
 @RequestMapping("/customers")
 public class CustomerController {
